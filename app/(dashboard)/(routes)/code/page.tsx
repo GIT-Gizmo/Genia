@@ -2,11 +2,15 @@
 
 import React, { useState } from 'react'
 import * as z from "zod"
-import { MessageSquare } from 'lucide-react'
+import { MessageSquare, Copy, Check } from 'lucide-react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
@@ -24,9 +28,10 @@ type Message = {
     role: "user" | "assistant"
 }
 
-const ConversationPage = () => {
+const CodeGenerationPage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<Message[]>([])
+    const [copied, setCopied] = useState<string | null>(null)
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -48,12 +53,12 @@ const ConversationPage = () => {
 
             const newMessages = [...messages, userMessage];
 
-            const response = await axios.post("/api/conversation", {
-                messages: newMessages.map(msg => msg.content),
+            const response = await axios.post("/api/code", {
+                messages: values.prompt
             });
 
             const aiMessage: Message = {
-                content: response.data.response,
+                content: response.data.choices[0].message.content,
                 role: "assistant"
             }
 
@@ -67,11 +72,16 @@ const ConversationPage = () => {
         }
     }
 
+    const handleCopy = (content: string) => {
+        setCopied(content);
+        setTimeout(() => setCopied(null), 2000);
+    };
+
     return (
         <div>
             <Heading
-                title='Conversation'
-                description='Chat with AI that&apos;s 10x smarter than your Cat (or Dog)'
+                title='Code Generation'
+                description='Got a coding itch? Scratch it with your coding sidekick'
                 icon={MessageSquare}
                 iconColor='text-violet-500'
                 bgColor='bg-violet-500/10'
@@ -92,7 +102,7 @@ const ConversationPage = () => {
                                             <Input
                                                 className="border-0 outline-none focus-visible:ring-transparent"
                                                 disabled={isLoading}
-                                                placeholder="What is a banana's life goal?"
+                                                placeholder="Code to convince my cat to stop sitting on my keyboard."
                                                 {...field}
                                             />
                                         </FormControl>
@@ -113,7 +123,7 @@ const ConversationPage = () => {
                     )}
                     {messages.length === 0 && !isLoading && (
                         <Empty
-                            label="No converstion started yet. Genia is resting."
+                            label="No prompt yet. Genia is resting."
                         />
                     )}
                     <div className="flex flex-col-reverse gap-y-4">
@@ -125,9 +135,49 @@ const ConversationPage = () => {
                                 )}
                             >
                                 {message.role === "user" ? <UserAvatar /> : <AIAvatar />}
-                                <p className="text-sm">
-                                    {message.content}
-                                </p>
+                                <div className="flex-1 overflow-hidden">
+                                    {message.role === "user" ? (
+                                        <p className="text-sm">{message.content}</p>
+                                    ) : (
+                                        <ReactMarkdown
+                                            components={{
+                                                // @ts-ignore
+                                                code({ node, inline, className, children, ...props }) {
+                                                    const match = /language-(\w+)/.exec(className || '')
+                                                    const codeContent = String(children).replace(/\n$/, '');
+                                                    return !inline && match ? (
+                                                        <div className="relative">
+                                                            <SyntaxHighlighter
+                                                                // @ts-ignore
+                                                                style={atomDark}
+                                                                language={match[1]}
+                                                                PreTag="div"
+                                                                {...props}
+                                                            >
+                                                                {codeContent}
+                                                            </SyntaxHighlighter>
+                                                            <CopyToClipboard text={codeContent} onCopy={() => handleCopy(codeContent)}>
+                                                                <button
+                                                                    className="absolute top-2 right-2 p-1 text-xs bg-gray-800 text-white rounded"
+                                                                    aria-label="Copy code to clipboard"
+                                                                >
+                                                                    {copied === codeContent ? <Check size={16} /> : <Copy size={16} />}
+                                                                </button>
+                                                            </CopyToClipboard>
+                                                        </div>
+                                                    ) : (
+                                                        <code {...props} className={className}>
+                                                            {children}
+                                                        </code>
+                                                    )
+                                                }
+                                            }}
+                                            className="text-sm overflow-hidden"
+                                        >
+                                            {message.content}
+                                        </ReactMarkdown>
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -137,4 +187,4 @@ const ConversationPage = () => {
     )
 }
 
-export default ConversationPage
+export default CodeGenerationPage;
