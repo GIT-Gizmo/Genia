@@ -9,10 +9,10 @@ const Loader = () => {
                     fill
                     alt="Logo"
                 />
-                <p className="text-sm text-muted-">
-                    Genia is thinking...
-                </p>
             </div>
+            <p className="text-sm text-muted-">
+                Genia is thinking...
+            </p>
         </div>
     )
 }
