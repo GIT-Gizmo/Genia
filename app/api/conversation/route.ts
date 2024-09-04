@@ -24,8 +24,6 @@ export async function POST(req: Request) {
     };
 
     try {
-
-
         if (!userId) {
             return new NextResponse("Unathorized, please login.", { status: 401 });
         }
