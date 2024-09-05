@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import * as z from "zod"
-import { MessageSquare, Copy, Check } from 'lucide-react'
+import { Code, Copy, Check } from 'lucide-react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
@@ -78,13 +78,13 @@ const CodeGenerationPage = () => {
     };
 
     return (
-        <div>
+        <div className='bg-gray-800'>
             <Heading
                 title='Code Generation'
                 description='Got a coding itch? Scratch it with your coding sidekick'
-                icon={MessageSquare}
-                iconColor='text-violet-500'
-                bgColor='bg-violet-500/10'
+                icon={Code}
+                iconColor='text-[#00DDFF]'
+                bgColor='bg-[#00DDFF]/10'
             />
             <div className="px-4 lg:px-8">
                 <div>
@@ -131,13 +131,13 @@ const CodeGenerationPage = () => {
                             <div
                                 key={index}
                                 className={cn(
-                                    "p-8 w-full flex items-start gap-x-8 rounded-lg", message.role === "user" ? "bg-white border-black/10" : "bg-muted"
+                                    "w-full flex items-start gap-x-1 rounded-lg", message.role === "user" ? "gap-x-8 py-8 bg-black/10 border-black/10" : ""
                                 )}
                             >
                                 {message.role === "user" ? <UserAvatar /> : <AIAvatar />}
-                                <div className="flex-1 overflow-hidden">
+                                <div className="w-full text-sm flex-1 overflow-hidden">
                                     {message.role === "user" ? (
-                                        <p className="text-sm">{message.content}</p>
+                                        <p>{message.content}</p>
                                     ) : (
                                         <ReactMarkdown
                                             components={{

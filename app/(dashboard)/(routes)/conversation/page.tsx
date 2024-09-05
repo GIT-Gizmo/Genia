@@ -68,7 +68,7 @@ const ConversationPage = () => {
     }
 
     return (
-        <div>
+        <div className='bg-gray-800'>
             <Heading
                 title='Conversation'
                 description='Chat with AI that&apos;s 10x smarter than your Cat (or Dog)'
