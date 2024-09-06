@@ -8,7 +8,7 @@ const apiKey = process.env.RAPID_API_KEY
 export async function POST(req: Request) {
     const { userId } = auth()
     const body = await req.json()
-    const { messages } = body
+    const { prompt, amount = "1", resolution = "512" } = body
 
     const options = {
         method: 'POST',
@@ -19,9 +19,10 @@ export async function POST(req: Request) {
             'Content-Type': 'application/json'
         },
         data: {
-            text: messages,
-            width: 512,
-            height: 512
+            text: prompt,
+            n: parseInt(amount, 10),
+            width: resolution,
+            height: resolution,
         }
     };
 
@@ -34,12 +35,13 @@ export async function POST(req: Request) {
             return new NextResponse("OpenAI API Key is not configured", { status: 500 });
         }
 
-        if (!messages) {
-            return new NextResponse("Messages are required.", { status: 400 });
+        if (!prompt) {
+            return new NextResponse("Prompt is required.", { status: 400 });
         }
 
         const response = await axios.request(options);
         return NextResponse.json(response.data);
+        console.log(response.data)
     } catch (error) {
         console.log("Image Generation", error);
         return new NextResponse("An error occurred", { status: 500 });

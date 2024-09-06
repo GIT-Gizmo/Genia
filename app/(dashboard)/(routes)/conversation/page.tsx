@@ -99,7 +99,7 @@ const ConversationPage = () => {
                                     </FormItem>
                                 )}
                             />
-                            <Button className="col-span-12 lg:col-span-2 w-full" disabled={isLoading}>
+                            <Button className="col-span-12 lg:col-span-2 w-full bg-violet-500 hover:bg-violet-500/10" disabled={isLoading}>
                                 Ask AI
                             </Button>
                         </form>

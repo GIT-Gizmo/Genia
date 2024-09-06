@@ -31,14 +31,14 @@ const tools = [
     {
         label: "Music Generation",
         color: "text-pink-500",
-        bgColor: "bg-emerald-500/10",
+        bgColor: "bg-pink-500/10",
         href: "/music",
         icon: Music,
     },
     {
         label: "Code Generation",
         color: "text-[#00DDFF]",
-        bgColor: "bg-green -700/10",
+        bgColor: "bg-[#00DDFF]/10",
         href: "/code",
         icon: Code,
     },

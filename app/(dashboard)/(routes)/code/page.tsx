@@ -109,8 +109,8 @@ const CodeGenerationPage = () => {
                                     </FormItem>
                                 )}
                             />
-                            <Button className="col-span-12 lg:col-span-2 w-full" disabled={isLoading}>
-                                Ask AI
+                            <Button className="col-span-12 lg:col-span-2 w-full bg-[#00DDFF]/30 hover:bg-[#00DDFF]/10" disabled={isLoading}>
+                                Summon the code
                             </Button>
                         </form>
                     </Form>
