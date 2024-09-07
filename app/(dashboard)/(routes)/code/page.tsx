@@ -137,7 +137,7 @@ const CodeGenerationPage = () => {
                                 {message.role === "user" ? <UserAvatar /> : <AIAvatar />}
                                 <div className="w-full text-sm flex-1 overflow-hidden">
                                     {message.role === "user" ? (
-                                        <p>{message.content}</p>
+                                        <p className='text-zinc-300'>{message.content}</p>
                                     ) : (
                                         <ReactMarkdown
                                             components={{

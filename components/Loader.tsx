@@ -10,7 +10,7 @@ const Loader = () => {
                     alt="Logo"
                 />
             </div>
-            <p className="text-sm text-muted-">
+            <p className="text-sm text-zinc-300">
                 Genia is thinking...
             </p>
         </div>

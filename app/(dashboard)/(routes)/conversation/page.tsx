@@ -100,7 +100,7 @@ const ConversationPage = () => {
                                 )}
                             />
                             <Button className="col-span-12 lg:col-span-2 w-full bg-violet-500 hover:bg-violet-500/10" disabled={isLoading}>
-                                Ask AI
+                                Chat
                             </Button>
                         </form>
                     </Form>
@@ -125,7 +125,7 @@ const ConversationPage = () => {
                                 )}
                             >
                                 {message.role === "user" ? <UserAvatar /> : <AIAvatar />}
-                                <p className="text-sm">
+                                <p className="text-sm text-zinc-300">
                                     {message.content}
                                 </p>
                             </div>

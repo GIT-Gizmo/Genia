@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardFooter } from '@/components/ui/card'
 import { amountOptions, formSchema, resolutionOptions } from "./constants"
-import { cn } from "@/lib/utils"
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
@@ -44,9 +43,15 @@ const ImageGenerationPage = () => {
 
             const response = await axios.post("/api/image", values);
 
-            const urls = response.data.map((image: { url: string }) => image.url);
+            console.log("API response:", response.data);
 
-            setImages(urls);
+            if (Array.isArray(response.data)) {
+                const urls = response.data;
+                console.log("Image URLs:", urls);
+                setImages(urls);
+            } else {
+                console.error("Unexpected API response format:", response.data);
+            }
 
             form.reset();
         } catch (error) {
@@ -55,6 +60,23 @@ const ImageGenerationPage = () => {
             router.refresh();
         }
     }
+
+    const handleDownload = async (imageUrl: string) => {
+        try {
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'generated-image.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
+    };
 
     return (
         <div className='bg-gray-800'>
@@ -176,11 +198,11 @@ const ImageGenerationPage = () => {
                                         alt="Image"
                                     />
                                 </div>
-                                <CardFooter className="p-2">
+                                <CardFooter className="p-2 bg-gray-700">
                                     <Button
-                                        onClick={() => window.open(src)}
+                                        onClick={() => handleDownload(src)}
                                         variant="secondary"
-                                        className="w-full"
+                                        className="w-full bg-gray-800 text-white"
                                     >
                                         <Download className='h-4 w-4 mr-2' />
                                         Download
