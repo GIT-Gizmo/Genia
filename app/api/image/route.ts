@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         }
 
         if (!replicate) {
-            return new NextResponse("Unauthorized, API key required.", { status: 401 });
+            return new NextResponse("Unauthorized, API key required. Na here I dey", { status: 401 });
         }
 
         if (!prompt) {
@@ -31,6 +31,8 @@ export async function POST(req: Request) {
         if (!resolution) {
             return new NextResponse("Resolution is required.", { status: 400 });
         }
+
+        console.log("I don pass there")
 
         const output = await replicate.run(
             "bingbangboom-lab/flux-dreamscape:b761fa16918356ee07f31fad9b0d41d8919b9ff08f999e2d298a5a35b672f47e",
