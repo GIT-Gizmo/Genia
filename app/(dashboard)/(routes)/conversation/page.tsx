@@ -18,10 +18,11 @@ import { AIAvatar, UserAvatar } from '@/components/Avatar'
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
 import Loader from '@/components/Loader'
+import { Content } from 'next/font/google'
 
 type Message = {
+    role: "user" | "assistant";
     content: string;
-    role: "user" | "assistant"
 }
 
 const ConversationPage = () => {
@@ -42,19 +43,19 @@ const ConversationPage = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const userMessage: Message = {
+                role: "user",
                 content: values.prompt,
-                role: "user"
             }
 
             const newMessages = [...messages, userMessage];
 
             const response = await axios.post("/api/conversation", {
-                messages: newMessages.map(msg => msg.content),
+                messages: values.prompt,
             });
 
             const aiMessage: Message = {
-                content: response.data.response,
-                role: "assistant"
+                role: "assistant",
+                content: response.data.content,
             }
 
             setMessages([...newMessages, aiMessage]);
@@ -106,11 +107,9 @@ const ConversationPage = () => {
                     </Form>
                 </div>
                 <div className="space-y-4 mt-4">
-                    {isLoading && (
-                        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
-                            <Loader />
-                        </div>
-                    )}
+                    <div className="p-8 rounded-lg w-full flex items-center justify-center bg-gray-900">
+                        <Loader />
+                    </div>
                     {messages.length === 0 && !isLoading && (
                         <Empty
                             label="No converstion started yet. Genia is resting."
@@ -121,7 +120,7 @@ const ConversationPage = () => {
                             <div
                                 key={index}
                                 className={cn(
-                                    "p-8 w-full flex items-start gap-x-8 rounded-lg", message.role === "user" ? "bg-white border-black/10" : "bg-muted"
+                                    "p-8 w-full flex items-start gap-x-8 rounded-lg", message.role === "user" ? "bg-white/10 border-black/10" : "bg-black/10"
                                 )}
                             >
                                 {message.role === "user" ? <UserAvatar /> : <AIAvatar />}

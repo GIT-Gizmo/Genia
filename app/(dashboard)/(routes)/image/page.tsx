@@ -84,12 +84,12 @@ const ImageGenerationPage = () => {
                 bgColor='bg-pink-600/10'
             />
             <div className="px-4 gap-4 lg:px-8">
-                <div>
+                <div className='mb-2'>
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)
                             }
-                            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
+                            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm"
                         >
                             <FormField
                                 name="prompt"

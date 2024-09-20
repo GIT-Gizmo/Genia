@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import * as z from "zod"
-import { Music } from 'lucide-react'
+import { Video } from 'lucide-react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
@@ -17,9 +17,9 @@ import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
 import Loader from '@/components/Loader'
 
-const MusicGenerationPage = () => {
+const VideoGenerationPage = () => {
     const router = useRouter();
-    const [music, setMusic] = useState<string>()
+    const [video, setVideo] = useState<string>()
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -34,11 +34,11 @@ const MusicGenerationPage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            setMusic(undefined)
+            setVideo(undefined)
 
-            const response = await axios.post("/api/music", values);
+            const response = await axios.post("/api/video", values);
 
-            setMusic(response.data.audio)
+            setVideo(response.data[0])
 
             form.reset();
         } catch (error) {
@@ -51,11 +51,11 @@ const MusicGenerationPage = () => {
     return (
         <main className='bg-gray-800'>
             <Heading
-                title='Music Generation'
-                description='Hum a tune? Nah, just type it—let our AI drop the beat!'
-                icon={Music}
-                iconColor='text-pink-500'
-                bgColor='bg-pink-500/10'
+                title='Video Generation'
+                description='Your director, producer, and special effects wizard all in one.'
+                icon={Video}
+                iconColor='text-orange-700'
+                bgColor='bg-orange-700/10'
             />
             <div className="px-4 lg:px-8">
                 <div>
@@ -73,7 +73,7 @@ const MusicGenerationPage = () => {
                                             <Input
                                                 className="border-0 outline-none focus-visible:ring-transparent"
                                                 disabled={isLoading}
-                                                placeholder="A soundtrack for a squirrel on a mission"
+                                                placeholder="Generate a video of a turtle training for a marathon"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -81,7 +81,7 @@ const MusicGenerationPage = () => {
                                 )}
                             />
                             <Button className="col-span-12 lg:col-span-2 w-full bg-violet-500 hover:bg-violet-500/10" disabled={isLoading}>
-                                Summon the melody
+                                Summon the frames
                             </Button>
                         </form>
                     </Form>
@@ -92,13 +92,13 @@ const MusicGenerationPage = () => {
                             <Loader />
                         </div>
                     )}
-                    {!music && !isLoading && (
+                    {!video && !isLoading && (
                         <Empty
-                            label="No music generated yet. Genia is resting."
+                            label="No video generated yet. Genia is resting."
                         />
                     )}
-                    {music && (
-                        <audio src="{music}" className="w-full mt-8"></audio>
+                    {video && (
+                        <video src={video} className="w-full aspect-video mt-8 rounded-lg border bg-video"></video>
                     )}
                 </div>
             </div>
@@ -106,4 +106,4 @@ const MusicGenerationPage = () => {
     )
 }
 
-export default MusicGenerationPage
+export default VideoGenerationPage

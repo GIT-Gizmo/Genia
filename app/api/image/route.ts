@@ -20,6 +20,8 @@ export async function POST(req: Request) {
         data: {
             negative_prompt: '',
             prompt: prompt,
+            width: 512,
+            height: 512,
             hr_scale: 2
         }
     };
@@ -39,7 +41,6 @@ export async function POST(req: Request) {
 
         const response = await axios.request(options);
         return NextResponse.json(response.data);
-        console.log(response.data)
     } catch (error) {
         console.log("Image Generation", error);
         return new NextResponse("An error occurred", { status: 500 });
