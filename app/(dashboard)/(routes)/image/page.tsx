@@ -41,9 +41,13 @@ const ImageGenerationPage = () => {
 
             console.log("API response:", response.data);
 
-            const base64Image = response.data;
-            const imageUrl = `data:image/png;base64,${base64Image}`;
-            setImage(imageUrl);
+            if (response.data) {
+                const base64Image = response.data;
+                const imageUrl = `data:image/png;base64,${base64Image}`;
+                setImage(imageUrl);
+            } else {
+                console.error("Unexpected API response format:", response.data);
+            }
 
             form.reset();
         } catch (error) {
@@ -79,7 +83,7 @@ const ImageGenerationPage = () => {
                 iconColor='text-pink-600'
                 bgColor='bg-pink-600/10'
             />
-            <div className="px-4 lg:px-8">
+            <div className="px-4 gap-4 lg:px-8">
                 <div>
                     <Form {...form}>
                         <form
@@ -119,29 +123,31 @@ const ImageGenerationPage = () => {
                             label="No images generated yet. Genia is resting."
                         />
                     )}
-                    <div className="p-10">
-                        <Card
-                            className="rounded-lg overflow-hidden"
-                        >
-                            <div className="relative aspect-square">
-                                <Image
-                                    src={image}
-                                    fill
-                                    alt="Image"
-                                />
-                            </div>
-                            <CardFooter className="p-2 bg-gray-700">
-                                <Button
-                                    onClick={() => handleDownload(image)}
-                                    variant="secondary"
-                                    className="w-full bg-gray-800 text-white"
-                                >
-                                    <Download className='h-4 w-4 mr-2' />
-                                    Download
-                                </Button>
-                            </CardFooter>
-                        </Card>
-                    </div>
+                    {image && (
+                        <div className="p-10">
+                            <Card
+                                className="rounded-lg overflow-hidden"
+                            >
+                                <div className="relative aspect-square">
+                                    <Image
+                                        src={image}
+                                        fill
+                                        alt="Image"
+                                    />
+                                </div>
+                                <CardFooter className="p-2 bg-gray-700">
+                                    <Button
+                                        onClick={() => handleDownload(image)}
+                                        variant="secondary"
+                                        className="w-full bg-gray-800 text-white"
+                                    >
+                                        <Download className='h-4 w-4 mr-2' />
+                                        Download
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
