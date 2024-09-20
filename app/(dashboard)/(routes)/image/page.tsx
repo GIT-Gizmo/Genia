@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardFooter } from '@/components/ui/card'
-import { amountOptions, formSchema, resolutionOptions } from "./constants"
+import { formSchema, resolutionOptions } from "./constants"
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
@@ -22,14 +22,14 @@ import Loader from '@/components/Loader'
 
 const ImageGenerationPage = () => {
     const router = useRouter();
-    const [images, setImages] = useState<string[]>([])
+    const [image, setImage] = useState("")
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
             resolver: zodResolver(formSchema),
             defaultValues: {
                 prompt: "",
-                amount: "1",
+                // amount: "1",
                 resolution: "512x512",
             }
         }
@@ -39,16 +39,15 @@ const ImageGenerationPage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            setImages([])
 
             const response = await axios.post("/api/image", values);
 
             console.log("API response:", response.data);
 
-            if (Array.isArray(response.data)) {
-                const urls = response.data;
-                console.log("Image URLs:", urls);
-                setImages(urls);
+            if (response.data) {
+                const base64Image = response.data;
+                const imageUrl = `data:image/png;base64,${base64Image}`;
+                setImage(imageUrl);
             } else {
                 console.error("Unexpected API response format:", response.data);
             }
@@ -59,7 +58,33 @@ const ImageGenerationPage = () => {
         } finally {
             router.refresh();
         }
-    }
+    };
+
+
+    // For when there's more than one image coming from the API
+    // const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    //     try {
+    //         setImages([])
+
+    //         const response = await axios.post("/api/image", values);
+
+    //         console.log("API response:", response.data);
+
+    //         if (Array.isArray(response.data)) {
+    //             const urls = response.data;
+    //             console.log("Image URLs:", urls);
+    //             setImages(urls);
+    //         } else {
+    //             console.error("Unexpected API response format:", response.data);
+    //         }
+
+    //         form.reset();
+    //     } catch (error) {
+    //         console.log(error);
+    //     } finally {
+    //         router.refresh();
+    //     }
+    // }
 
     const handleDownload = async (imageUrl: string) => {
         try {
@@ -110,7 +135,7 @@ const ImageGenerationPage = () => {
                                     </FormItem>
                                 )}
                             />
-                            <FormField
+                            {/* <FormField
                                 name='amount'
                                 render={({ field }) => (
                                     <FormItem className='col-span-12 lg:col-span-2'>
@@ -138,7 +163,7 @@ const ImageGenerationPage = () => {
                                         </Select>
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
                             <FormField
                                 name='resolution'
                                 render={({ field }) => (
@@ -180,36 +205,33 @@ const ImageGenerationPage = () => {
                             <Loader />
                         </div>
                     )}
-                    {images.length === 0 && !isLoading && (
+                    {image.length === 0 && !isLoading && (
                         <Empty
                             label="No images generated yet. Genia is resting."
                         />
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
-                        {images.map((src) => (
-                            <Card
-                                key={src}
-                                className="rounded-lg overflow-hidden"
-                            >
-                                <div className="relative aspect-square">
-                                    <Image
-                                        src={src}
-                                        fill
-                                        alt="Image"
-                                    />
-                                </div>
-                                <CardFooter className="p-2 bg-gray-700">
-                                    <Button
-                                        onClick={() => handleDownload(src)}
-                                        variant="secondary"
-                                        className="w-full bg-gray-800 text-white"
-                                    >
-                                        <Download className='h-4 w-4 mr-2' />
-                                        Download
-                                    </Button>
-                                </CardFooter>
-                            </Card>
-                        ))}
+                        <Card
+                            className="rounded-lg overflow-hidden"
+                        >
+                            <div className="relative aspect-square">
+                                <Image
+                                    src={image}
+                                    fill
+                                    alt="Image"
+                                />
+                            </div>
+                            <CardFooter className="p-2 bg-gray-700">
+                                <Button
+                                    onClick={() => handleDownload(image)}
+                                    variant="secondary"
+                                    className="w-full bg-gray-800 text-white"
+                                >
+                                    <Download className='h-4 w-4 mr-2' />
+                                    Download
+                                </Button>
+                            </CardFooter>
+                        </Card>
                     </div>
                 </div>
             </div>
