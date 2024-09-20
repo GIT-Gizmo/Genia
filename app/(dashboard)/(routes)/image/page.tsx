@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardFooter } from '@/components/ui/card'
-import { formSchema, resolutionOptions } from "./constants"
+import { formSchema } from "./constants"
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
@@ -30,7 +30,9 @@ const ImageGenerationPage = () => {
             defaultValues: {
                 prompt: "",
                 // amount: "1",
-                resolution: "512x512",
+                // resolution: "512",
+                // height: "",
+                // width: "",
             }
         }
     )
@@ -44,13 +46,9 @@ const ImageGenerationPage = () => {
 
             console.log("API response:", response.data);
 
-            if (response.data) {
-                const base64Image = response.data;
-                const imageUrl = `data:image/png;base64,${base64Image}`;
-                setImage(imageUrl);
-            } else {
-                console.error("Unexpected API response format:", response.data);
-            }
+            const base64Image = response.data;
+            const imageUrl = `data:image/png;base64,${base64Image}`;
+            setImage(imageUrl);
 
             form.reset();
         } catch (error) {
@@ -135,6 +133,36 @@ const ImageGenerationPage = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/*<FormField
+                                name="height"
+                                render={({ field }) => (
+                                    <FormItem className="col-span-12 lg:col-span-2">
+                                        <FormControl className="m-0 p-0">
+                                            <Input
+                                                className="border-2 p-1 outline-none focus-visible:ring-transparent rounded-md"
+                                                disabled={isLoading}
+                                                placeholder="Height (Default is 512)"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name="width"
+                                render={({ field }) => (
+                                    <FormItem className="col-span-12 lg:col-span-2">
+                                        <FormControl className="m-0 p-0">
+                                            <Input
+                                                className="border-2 p-1 outline-none focus-visible:ring-transparent rounded-md"
+                                                disabled={isLoading}
+                                                placeholder="Width (Default is 512)"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            /> */}
                             {/* <FormField
                                 name='amount'
                                 render={({ field }) => (
@@ -163,7 +191,7 @@ const ImageGenerationPage = () => {
                                         </Select>
                                     </FormItem>
                                 )}
-                            /> */}
+                            />
                             <FormField
                                 name='resolution'
                                 render={({ field }) => (
@@ -192,7 +220,7 @@ const ImageGenerationPage = () => {
                                         </Select>
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
                             <Button className="bg-pink-600 hover:bg-pink-600/80 col-span-12 lg:col-span-2 w-full" disabled={isLoading}>
                                 Summon the pixels
                             </Button>
@@ -210,7 +238,7 @@ const ImageGenerationPage = () => {
                             label="No images generated yet. Genia is resting."
                         />
                     )}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+                    <div className="p-10">
                         <Card
                             className="rounded-lg overflow-hidden"
                         >

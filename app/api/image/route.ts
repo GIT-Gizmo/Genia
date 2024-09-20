@@ -132,7 +132,7 @@ const apiKey = process.env.RAPID_API_KEY
 export async function POST(req: Request) {
     const { userId } = auth()
     const body = await req.json()
-    const { prompt, resolution = "512" } = body
+    const { prompt } = body
 
     const options = {
         method: 'POST',
@@ -145,8 +145,6 @@ export async function POST(req: Request) {
         data: {
             negative_prompt: '',
             prompt: prompt,
-            width: resolution,
-            height: resolution,
             hr_scale: 2
         }
     };

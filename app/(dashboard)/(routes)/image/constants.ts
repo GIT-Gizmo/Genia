@@ -5,7 +5,7 @@ export const formSchema = z.object({
         message: "Image prompt is required.",
     }),
     // amount: z.string().min(1),
-    resolution: z.string().min(1),
+    // resolution: z.string().min(1),
 })
 
 // export const amountOptions = [
@@ -31,20 +31,20 @@ export const formSchema = z.object({
 //     },
 // ]
 
-export const resolutionOptions = [
-    {
-        value: "256",
-        label: "256x256",
-    },
-    {
-        value: "512",
-        label: "512x512",
-    },
-    {
-        value: "1024",
-        label: "1024x1024",
-    },
-]
+// export const resolutionOptions = [
+//     {
+//         value: "256",
+//         label: "256x256",
+//     },
+//     {
+//         value: "512",
+//         label: "512x512",
+//     },
+//     {
+//         value: "1024",
+//         label: "1024x1024",
+//     },
+// ]
 
 // export const aspectRatioOptions = [
 //     {
