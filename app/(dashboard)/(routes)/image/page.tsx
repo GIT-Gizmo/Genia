@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardFooter } from '@/components/ui/card'
@@ -29,10 +28,6 @@ const ImageGenerationPage = () => {
             resolver: zodResolver(formSchema),
             defaultValues: {
                 prompt: "",
-                // amount: "1",
-                // resolution: "512",
-                // height: "",
-                // width: "",
             }
         }
     )
@@ -57,32 +52,6 @@ const ImageGenerationPage = () => {
             router.refresh();
         }
     };
-
-
-    // For when there's more than one image coming from the API
-    // const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    //     try {
-    //         setImages([])
-
-    //         const response = await axios.post("/api/image", values);
-
-    //         console.log("API response:", response.data);
-
-    //         if (Array.isArray(response.data)) {
-    //             const urls = response.data;
-    //             console.log("Image URLs:", urls);
-    //             setImages(urls);
-    //         } else {
-    //             console.error("Unexpected API response format:", response.data);
-    //         }
-
-    //         form.reset();
-    //     } catch (error) {
-    //         console.log(error);
-    //     } finally {
-    //         router.refresh();
-    //     }
-    // }
 
     const handleDownload = async (imageUrl: string) => {
         try {
@@ -133,94 +102,6 @@ const ImageGenerationPage = () => {
                                     </FormItem>
                                 )}
                             />
-                            {/*<FormField
-                                name="height"
-                                render={({ field }) => (
-                                    <FormItem className="col-span-12 lg:col-span-2">
-                                        <FormControl className="m-0 p-0">
-                                            <Input
-                                                className="border-2 p-1 outline-none focus-visible:ring-transparent rounded-md"
-                                                disabled={isLoading}
-                                                placeholder="Height (Default is 512)"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                name="width"
-                                render={({ field }) => (
-                                    <FormItem className="col-span-12 lg:col-span-2">
-                                        <FormControl className="m-0 p-0">
-                                            <Input
-                                                className="border-2 p-1 outline-none focus-visible:ring-transparent rounded-md"
-                                                disabled={isLoading}
-                                                placeholder="Width (Default is 512)"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            /> */}
-                            {/* <FormField
-                                name='amount'
-                                render={({ field }) => (
-                                    <FormItem className='col-span-12 lg:col-span-2'>
-                                        <Select
-                                            disabled={isLoading}
-                                            onValueChange={field.onChange}
-                                            value={field.value}
-                                            defaultValue={field.value}
-                                        >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue defaultValue={field.value} />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {amountOptions.map((option) => (
-                                                    <SelectItem
-                                                        key={option.value}
-                                                        value={option.value}
-                                                    >
-                                                        {option.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                name='resolution'
-                                render={({ field }) => (
-                                    <FormItem className='col-span-12 lg:col-span-2'>
-                                        <Select
-                                            disabled={isLoading}
-                                            onValueChange={field.onChange}
-                                            value={field.value}
-                                            defaultValue={field.value}
-                                        >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue defaultValue={field.value} />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {resolutionOptions.map((option) => (
-                                                    <SelectItem
-                                                        key={option.value}
-                                                        value={option.value}
-                                                    >
-                                                        {option.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FormItem>
-                                )}
-                            /> */}
                             <Button className="bg-pink-600 hover:bg-pink-600/80 col-span-12 lg:col-span-2 w-full" disabled={isLoading}>
                                 Summon the pixels
                             </Button>
