@@ -2,6 +2,8 @@ import axios from "axios"
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
+
 const apiKey = process.env.RAPID_API_KEY
 
 export async function POST(req: Request) {
@@ -39,7 +41,16 @@ export async function POST(req: Request) {
             return new NextResponse("Prompt is required.", { status: 400 });
         }
 
+        const freeTrial = await checkApiLimit();
+
+        if (!freeTrial) {
+            return new NextResponse("Free trial limit has been exceeded. Please upgrade to premium.", { status: 403 });
+        }
+
         const response = await axios.request(options);
+
+        await increaseApiLimit();
+
         return NextResponse.json(response.data);
     } catch (error) {
         console.log("Image Generation", error);

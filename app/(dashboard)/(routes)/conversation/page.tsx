@@ -107,9 +107,11 @@ const ConversationPage = () => {
                     </Form>
                 </div>
                 <div className="space-y-4 mt-4">
-                    <div className="p-8 rounded-lg w-full flex items-center justify-center bg-gray-900">
-                        <Loader />
-                    </div>
+                    {isLoading && (
+                        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-violet-500/10">
+                            <Loader />
+                        </div>
+                    )}
                     {messages.length === 0 && !isLoading && (
                         <Empty
                             label="No converstion started yet. Genia is resting."
