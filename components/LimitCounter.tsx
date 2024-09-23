@@ -6,6 +6,7 @@ import { MAX_FREE_COUNTS } from "@/constants";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 import { Zap } from "lucide-react";
+import { usePremiumModal } from "@/hooks/use-premium-modal";
 
 interface CounterProps {
     apiLimitCount: number;
@@ -13,6 +14,7 @@ interface CounterProps {
 
 const LimitCounter = ({ apiLimitCount = 0 }: CounterProps) => {
     const [mounted, setMounted] = useState(false);
+    const premiumModal = usePremiumModal();
 
     useEffect(() => {
         setMounted(true)
@@ -35,7 +37,11 @@ const LimitCounter = ({ apiLimitCount = 0 }: CounterProps) => {
                         />
                     </div>
 
-                    <Button className="w-full" variant={"premium"}>
+                    <Button
+                        className="w-full"
+                        variant={"premium"}
+                        onClick={premiumModal.onOpen}
+                    >
                         Upgrade
                         <Zap className="w-4 ml-2 fill-white" />
                     </Button>

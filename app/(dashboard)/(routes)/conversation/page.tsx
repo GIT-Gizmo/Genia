@@ -2,23 +2,24 @@
 
 import React, { useState } from 'react'
 import * as z from "zod"
-import { MessageSquare } from 'lucide-react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import { MessageSquare } from 'lucide-react'
+
+import { usePremiumModal } from '@/hooks/use-premium-modal'
+import { cn } from "@/lib/utils"
+import { formSchema } from "./constants"
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { formSchema } from "./constants"
-import { cn } from "@/lib/utils"
 import { AIAvatar, UserAvatar } from '@/components/Avatar'
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
 import Loader from '@/components/Loader'
-import { Content } from 'next/font/google'
 
 type Message = {
     role: "user" | "assistant";
@@ -28,6 +29,7 @@ type Message = {
 const ConversationPage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<Message[]>([])
+    const premiumModal = usePremiumModal()
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -61,7 +63,10 @@ const ConversationPage = () => {
             setMessages([...newMessages, aiMessage]);
 
             form.reset();
-        } catch (error) {
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                premiumModal.onOpen();
+            }
             console.log(error);
         } finally {
             router.refresh();

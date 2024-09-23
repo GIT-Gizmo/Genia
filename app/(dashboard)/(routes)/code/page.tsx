@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import * as z from "zod"
-import { Code, Copy, Check } from 'lucide-react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
@@ -11,12 +10,15 @@ import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Code, Copy, Check } from 'lucide-react'
+
+import { usePremiumModal } from '@/hooks/use-premium-modal'
+import { formSchema } from "./constants"
+import { cn } from "@/lib/utils"
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { formSchema } from "./constants"
-import { cn } from "@/lib/utils"
 import { AIAvatar, UserAvatar } from '@/components/Avatar'
 
 import Heading from '@/components/Heading'
@@ -32,6 +34,7 @@ const CodeGenerationPage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<Message[]>([])
     const [copied, setCopied] = useState<string | null>(null)
+    const premiumModal = usePremiumModal()
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -65,7 +68,10 @@ const CodeGenerationPage = () => {
             setMessages([...newMessages, aiMessage]);
 
             form.reset();
-        } catch (error) {
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                premiumModal.onOpen();
+            }
             console.log(error);
         } finally {
             router.refresh();

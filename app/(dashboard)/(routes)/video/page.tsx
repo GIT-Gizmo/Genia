@@ -8,10 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 
+import { usePremiumModal } from '@/hooks/use-premium-modal'
+import { formSchema } from "./constants"
+
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { formSchema } from "./constants"
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
@@ -20,6 +22,7 @@ import Loader from '@/components/Loader'
 const VideoGenerationPage = () => {
     const router = useRouter();
     const [video, setVideo] = useState<string>()
+    const premiumModal = usePremiumModal()
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -41,7 +44,10 @@ const VideoGenerationPage = () => {
             setVideo(response.data[0])
 
             form.reset();
-        } catch (error) {
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                premiumModal.onOpen();
+            }
             console.log(error);
         } finally {
             router.refresh();

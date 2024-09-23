@@ -9,11 +9,13 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 
+import { usePremiumModal } from '@/hooks/use-premium-modal'
+import { formSchema } from "./constants"
+
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardFooter } from '@/components/ui/card'
-import { formSchema } from "./constants"
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
@@ -22,6 +24,7 @@ import Loader from '@/components/Loader'
 const ImageGenerationPage = () => {
     const router = useRouter();
     const [image, setImage] = useState("")
+    const premiumModal = usePremiumModal()
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -50,7 +53,10 @@ const ImageGenerationPage = () => {
             }
 
             form.reset();
-        } catch (error) {
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                premiumModal.onOpen();
+            }
             console.log(error);
         } finally {
             router.refresh();
