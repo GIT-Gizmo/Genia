@@ -19,7 +19,8 @@ import { AIAvatar, UserAvatar } from '@/components/Avatar'
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
-import Loader from '@/components/Loader'
+import { LogoSpinner } from '@/components/Loader'
+import { useToast } from '@/components/Toast';
 
 type Message = {
     role: "user" | "assistant";
@@ -30,6 +31,7 @@ const ConversationPage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<Message[]>([])
     const premiumModal = usePremiumModal()
+    const { showErrorToast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -66,8 +68,10 @@ const ConversationPage = () => {
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 premiumModal.onOpen();
+            } else {
+                console.log(error);
+                showErrorToast('An error occurred. Check your internet connection.');
             }
-            console.log(error);
         } finally {
             router.refresh();
         }
@@ -114,7 +118,7 @@ const ConversationPage = () => {
                 <div className="space-y-4 mt-4">
                     {isLoading && (
                         <div className="p-8 rounded-lg w-full flex items-center justify-center bg-violet-500/10">
-                            <Loader />
+                            <LogoSpinner />
                         </div>
                     )}
                     {messages.length === 0 && !isLoading && (

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import axios from "axios"
 
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
 
 const apiKey = process.env.RAPID_API_KEY;
 
@@ -45,14 +46,17 @@ export async function POST(req: Request) {
         }
 
         const freeTrial = await checkApiLimit();
+        const isPremium = await checkSubscription();
 
-        if (!freeTrial) {
+        if (!freeTrial && !isPremium) {
             return new NextResponse("Free trial limit has been exceeded. Please upgrade to premium.", { status: 403 });
         }
 
         const response = await axios.request(options);
 
-        await increaseApiLimit();
+        if (!isPremium) {
+            await increaseApiLimit();
+        }
 
         return NextResponse.json(response.data.choices[0].message);
 

@@ -21,12 +21,12 @@ const DashboardPage = () => {
 
     return (
         <div className='space-y-4'>
-            <div className="text-[#40A6F5] mb-0 space-y-4">
+            <div className="text-blue-500 mb-0 space-y-4">
                 <h2 className="text-2xl md:text-4xl font-bold text-center">
                     Explore the power of AI
                 </h2>
-                <p className="text-gray-400 text-muted-foreground font-light text-sm md:text-lg text-center">
-                    Interact with advanced AI features – Unlock the potential of artificial intelligence.
+                <p className="text-gray-400 text-muted-foreground font-light mx-auto text-sm md:text-lg text-center">
+                    Unlock the potential of artificial intelligence with advanced features.
                 </p>
             </div>
             <div className="px-4 md:px-20 lg:px-32 space-y-4">
@@ -34,9 +34,9 @@ const DashboardPage = () => {
                     <Card
                         onClick={() => router.push(tool.href)}
                         key={tool.href}
-                        className='bg-gray-700 p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer'
+                        className='bg-transaparent hover:bg-gray-900/50 p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer'
                     >
-                        <div className='flex items-center gap-x-4'>
+                        <div className='flex items-center gap-x-4 rounded-sm'>
                             <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
                                 <tool.icon className={cn("w-8 h-8", tool.color)} />
                             </div>

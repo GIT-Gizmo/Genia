@@ -19,12 +19,14 @@ import { Card, CardFooter } from '@/components/ui/card'
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
-import Loader from '@/components/Loader'
+import { LogoSpinner } from '@/components/Loader'
+import { useToast } from '@/components/Toast';
 
 const ImageGenerationPage = () => {
     const router = useRouter();
     const [image, setImage] = useState("")
     const premiumModal = usePremiumModal()
+    const { showErrorToast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -56,8 +58,10 @@ const ImageGenerationPage = () => {
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 premiumModal.onOpen();
+            } else {
+                console.log(error);
+                showErrorToast('An error occurred. Check your internet connection.');
             }
-            console.log(error);
         } finally {
             router.refresh();
         }
@@ -121,7 +125,7 @@ const ImageGenerationPage = () => {
                 <div className="space-y-4 mt-4">
                     {isLoading && (
                         <div className="p-20">
-                            <Loader />
+                            <LogoSpinner />
                         </div>
                     )}
                     {image.length === 0 && !isLoading && (

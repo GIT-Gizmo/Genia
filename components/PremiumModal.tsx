@@ -1,5 +1,8 @@
 "use client"
 
+import axios from "axios";
+import { useState } from "react";
+
 import { usePremiumModal } from "@/hooks/use-premium-modal";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog"
 import { Badge } from "./ui/badge";
@@ -8,9 +11,28 @@ import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Check, Zap } from "lucide-react";
 import { Button } from "./ui/button";
+import { useToast } from '@/components/Toast';
 
 export const PremiumModal = () => {
     const premiumModal = usePremiumModal();
+    const [loading, setLoading] = useState(false)
+    const { showSuccessToast, showErrorToast } = useToast();
+
+    const onSubscribe = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get("/api/stripe");
+
+            window.location.href = response.data.url
+
+            showSuccessToast("You have successfully subscribed to Genia Premium. Enjoy.")
+        } catch (error) {
+            console.log(error);
+            showErrorToast('An error occurred while communicating with Stripe. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <Dialog open={premiumModal.isOpen} onOpenChange={premiumModal.onClose}>
@@ -45,6 +67,8 @@ export const PremiumModal = () => {
                 </DialogHeader>
                 <DialogFooter>
                     <Button
+                        onClick={onSubscribe}
+                        disabled={loading}
                         size="lg"
                         variant="premium"
                         className="w-full"

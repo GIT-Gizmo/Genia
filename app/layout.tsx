@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "@/components/ModalProvider";
+import { ToastProvider } from "@/components/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,12 @@ export default function RootLayout({
     <ClerkProvider afterSignOutUrl="/">
       <html lang="en">
         <body className={inter.className}>
-          <ModalProvider />
-          {children}
+          <ToastProvider>
+            <ModalProvider />
+            {children}
+          </ToastProvider>
         </body>
+        <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=sT8Dxxpw9QsB"></script>
       </html>
     </ClerkProvider>
   );

@@ -12,7 +12,8 @@ import LimitCounter from './LimitCounter'
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] })
 
 interface SidebarProps {
-    apiLimitCount: number
+    apiLimitCount: number;
+    isPremium: boolean
 }
 
 const routes = [
@@ -52,19 +53,13 @@ const routes = [
         href: "/code",
         icon: Code,
     },
-    {
-        label: "Settings",
-        href: "/settings",
-        icon: Settings,
-        color: "text-gray-500",
-    }
 ]
 
-const Sidebar = ({ apiLimitCount = 0 }: SidebarProps) => {
+const Sidebar = ({ apiLimitCount = 0, isPremium = false }: SidebarProps) => {
     const pathname = usePathname()
 
     return (
-        <div className="space-y-80 py-4 flex flex-col h-full text-white bg-[#111827]">
+        <div className="py-4 flex flex-col justify-between h-screen text-zinc-400 bg-[#111827]">
             <div className="px-3 py-2 flex-1">
                 <Link href="/dashboard" className="flex items-center pl-3 mb-14">
                     <div className="relative w-8 h-8 mr-4">
@@ -81,8 +76,8 @@ const Sidebar = ({ apiLimitCount = 0 }: SidebarProps) => {
                         <Link
                             key={route.href}
                             href={route.href}
-                            className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 transition',
-                                pathname === route.href ? "text-white bg-white/10" : "text-zinc-400",
+                            className={cn('text-sm group flex p-3 w-full rounded-md justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 transition',
+                                pathname === route.href ? "bg-white/10" : "",
                             )}
                         >
                             <div className="flex items-center flex-1">
@@ -94,7 +89,7 @@ const Sidebar = ({ apiLimitCount = 0 }: SidebarProps) => {
                 </div>
             </div>
 
-            <LimitCounter apiLimitCount={apiLimitCount} />
+            <LimitCounter apiLimitCount={apiLimitCount} isPremium={isPremium} />
         </div >
     )
 }

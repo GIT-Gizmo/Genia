@@ -17,12 +17,14 @@ import { Input } from "@/components/ui/input"
 
 import Heading from '@/components/Heading'
 import Empty from "@/components/Empty"
-import Loader from '@/components/Loader'
+import { LogoSpinner } from '@/components/Loader'
+import { useToast } from '@/components/Toast';
 
 const VideoGenerationPage = () => {
     const router = useRouter();
     const [video, setVideo] = useState<string>()
     const premiumModal = usePremiumModal()
+    const { showErrorToast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>(
         {
@@ -47,8 +49,10 @@ const VideoGenerationPage = () => {
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 premiumModal.onOpen();
+            } else {
+                console.log(error);
+                showErrorToast('An error occurred. Check your internet connection.');
             }
-            console.log(error);
         } finally {
             router.refresh();
         }
@@ -95,7 +99,7 @@ const VideoGenerationPage = () => {
                 <div className="space-y-4 mt-4">
                     {isLoading && (
                         <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
-                            <Loader />
+                            <LogoSpinner />
                         </div>
                     )}
                     {!video && !isLoading && (
