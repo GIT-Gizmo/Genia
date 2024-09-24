@@ -26,7 +26,6 @@ export default function RootLayout({
             {children}
           </ToastProvider>
         </body>
-        <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=sT8Dxxpw9QsB"></script>
       </html>
     </ClerkProvider>
   );
