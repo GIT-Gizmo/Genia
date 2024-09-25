@@ -1,9 +1,9 @@
-import { Code, ImageIcon, MessageSquare, Music, VideoIcon } from 'lucide-react'
+import { Code2, ImageIcon, MessageSquare, Music4, VideoIcon } from 'lucide-react'
 
 export const tools = [
     {
         label: "Conversation",
-        icon: MessageSquare,
+        Icon: MessageSquare,
         color: "text-violet-500",
         bgColor: "bg-violet-500/10",
         href: "/conversation",
@@ -13,27 +13,27 @@ export const tools = [
         color: "text-pink-700",
         bgColor: "bg-pink-700/10",
         href: "/image",
-        icon: ImageIcon,
+        Icon: ImageIcon,
     },
     {
         label: "Video Generation",
         color: "text-orange-700",
         bgColor: "bg-orange-700/10",
         href: "/video",
-        icon: VideoIcon,
+        Icon: VideoIcon,
     },
     {
         label: "Music Generation",
         color: "text-pink-500",
         bgColor: "bg-pink-500/10",
         href: "/music",
-        icon: Music,
+        Icon: Music4,
     },
     {
         label: "Code Generation",
         color: "text-[#00DDFF]",
         bgColor: "bg-[#00DDFF]/10",
         href: "/code",
-        icon: Code,
+        Icon: Code2,
     },
 ]

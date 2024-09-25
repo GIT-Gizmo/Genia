@@ -16,7 +16,7 @@ import { useToast } from '@/components/Toast';
 export const PremiumModal = () => {
     const premiumModal = usePremiumModal();
     const [loading, setLoading] = useState(false)
-    const { showSuccessToast, showErrorToast } = useToast();
+    const { showErrorToast } = useToast();
 
     const onSubscribe = async () => {
         try {
@@ -24,8 +24,6 @@ export const PremiumModal = () => {
             const response = await axios.get("/api/stripe");
 
             window.location.href = response.data.url
-
-            showSuccessToast("You have successfully subscribed to Genia Premium. Enjoy.")
         } catch (error) {
             console.log(error);
             showErrorToast('An error occurred while communicating with Stripe. Please try again.');
@@ -47,17 +45,17 @@ export const PremiumModal = () => {
                         </div>
                     </DialogTitle>
                     <DialogDescription className="text-center py-2 space-y-2 text-zinc-900 font-medium">
-                        {tools.map((tool) => (
+                        {tools.map(({ label, bgColor, color, Icon }) => (
                             <Card
-                                key={tool.label}
+                                key={label}
                                 className="p-3 border-black/5 flex items-center justify-between"
                             >
                                 <div className="flex items-center gap-x-4">
-                                    <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                                        <tool.icon className={cn("w-6 h-6", tool.color)} />
+                                    <div className={cn("p-2 w-fit rounded-md", bgColor)}>
+                                        <Icon className={cn("w-6 h-6", color)} />
                                     </div>
                                     <div className="font-semibold text-sm">
-                                        {tool.label}
+                                        {label}
                                     </div>
                                 </div>
                                 <Check className="text-primary w-5 h-5" />

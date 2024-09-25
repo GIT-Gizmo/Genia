@@ -2,7 +2,7 @@ import { getApiLimitCount } from '@/lib/api-limit'
 import { checkSubscription } from '@/lib/subscription';
 
 import Navbar from '@/components/Navbar'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/OldSidebar'
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 

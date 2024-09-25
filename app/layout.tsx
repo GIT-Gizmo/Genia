@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script"
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ModalProvider } from "@/components/ModalProvider";
@@ -26,6 +27,7 @@ export default function RootLayout({
             {children}
           </ToastProvider>
         </body>
+        <Script id="chatway" strategy="lazyOnload" src="https://cdn.chatway.app/widget.js?id=sT8Dxxpw9QsB" />
       </html>
     </ClerkProvider>
   );
