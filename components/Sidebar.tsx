@@ -13,7 +13,7 @@ interface CounterProps {
     isPremium: boolean
 }
 
-export function SidebarDemo({ apiLimitCount, isPremium }: CounterProps) {
+export function SidebarNav({ apiLimitCount, isPremium }: CounterProps) {
     const links = [
         {
             label: "Dashboard",

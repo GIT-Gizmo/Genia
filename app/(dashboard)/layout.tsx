@@ -2,7 +2,7 @@ import { getApiLimitCount } from '@/lib/api-limit'
 import { checkSubscription } from '@/lib/subscription';
 
 import Navbar from '@/components/Navbar'
-import Sidebar from '@/components/OldSidebar'
+import { SidebarNav } from '@/components/Sidebar'
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
@@ -13,7 +13,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         <div className='h-full relative bg-gray-800'>
             <div className="hidden h-full md:flex w-72 md:flex-col md:fixed md:inset-y-0 bg-gray-900">
                 <div>
-                    <Sidebar apiLimitCount={apiLimitCount} isPremium={isPremium} />
+                    <SidebarNav apiLimitCount={apiLimitCount} isPremium={isPremium} />
                 </div>
             </div>
 
