@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { Montserrat } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 import LimitCounter from './LimitCounter'
-import { tools } from '@/data'
+import { features } from '@/data'
 import { MessageSquare } from 'lucide-react'
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] })
@@ -45,7 +45,7 @@ const Sidebar = ({ apiLimitCount = 0, isPremium = false }: SidebarProps) => {
                             Dashboard
                         </div>
                     </Link>
-                    {tools.map(({ label, href, color, Icon }) => (
+                    {features.map(({ label, href, color, Icon }) => (
                         <Link
                             key={label}
                             href={href}

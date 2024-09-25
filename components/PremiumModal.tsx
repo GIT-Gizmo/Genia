@@ -6,7 +6,7 @@ import { useState } from "react";
 import { usePremiumModal } from "@/hooks/use-premium-modal";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog"
 import { Badge } from "./ui/badge";
-import { tools } from "@/data";
+import { features } from "@/data";
 import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Check, Zap } from "lucide-react";
@@ -45,7 +45,7 @@ export const PremiumModal = () => {
                         </div>
                     </DialogTitle>
                     <DialogDescription className="text-center py-2 space-y-2 text-zinc-900 font-medium">
-                        {tools.map(({ label, bgColor, color, Icon }) => (
+                        {features.map(({ label, bgColor, color, Icon }) => (
                             <Card
                                 key={label}
                                 className="p-3 border-black/5 flex items-center justify-between"

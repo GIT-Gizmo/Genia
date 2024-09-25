@@ -1,6 +1,6 @@
 import { Code2, ImageIcon, MessageSquare, Music4, VideoIcon } from 'lucide-react'
 
-export const tools = [
+export const features = [
     {
         label: "Conversation",
         Icon: MessageSquare,

@@ -1,7 +1,7 @@
 "use client"
 
 import { Card } from '@/components/ui/card'
-import { tools } from '@/data'
+import { features } from '@/data'
 import { cn } from '@/lib/utils'
 import { ArrowRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -30,18 +30,18 @@ const DashboardPage = () => {
                 </p>
             </div>
             <div className="px-4 md:px-20 lg:px-32 space-y-4">
-                {tools.map((tool) => (
+                {features.map(({ label, href, color, bgColor, Icon }) => (
                     <Card
-                        onClick={() => router.push(tool.href)}
-                        key={tool.href}
+                        onClick={() => router.push(href)}
+                        key={href}
                         className='bg-transaparent hover:bg-gray-900/50 p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer'
                     >
                         <div className='flex items-center gap-x-4 rounded-sm'>
-                            <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                                <tool.icon className={cn("w-8 h-8", tool.color)} />
+                            <div className={cn("p-2 w-fit rounded-md", bgColor)}>
+                                <Icon className={cn("w-8 h-8", color)} />
                             </div>
                             <div className="font-semibold text-zinc-300">
-                                {tool.label}
+                                {label}
                             </div>
                         </div>
                         <ArrowRight className='w-5 h-5 text-gray-400' />
