@@ -85,7 +85,7 @@ const ImageGenerationPage = () => {
     };
 
     return (
-        <div className='bg-gray-800'>
+        <div className='bg-gray-800 w-full mx-auto md:my-10 px-4 md:px-32 lg:px-64'>
             <Heading
                 title='Image Generation'
                 description='Think it, type it, boom—AI art magic!'

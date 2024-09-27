@@ -88,7 +88,7 @@ const CodeGenerationPage = () => {
     };
 
     return (
-        <div className='bg-gray-800'>
+        <div className='bg-gray-800 w-full mx-auto md:my-10 px-4 md:px-32 lg:px-64'>
             <Heading
                 title='Code Generation'
                 description='Got a coding itch? Scratch it with your coding sidekick'

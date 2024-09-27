@@ -53,18 +53,6 @@ const LimitCounter = ({ apiLimitCount = 0, isPremium = false }: CounterProps) =>
                     </Button>
                 </CardContent>
             </Card>
-
-            {/* <Link
-                href="/settings"
-                className={cn('text-md group flex p-3 font-medium cursor-pointer rounded-md mx-3 hover:text-white bg-blue-500/10 hover:bg-blue-300/10 transition',
-                    pathname === "/settings" ? "text-white" : "",
-                )}
-            >
-                <div className="flex items-center flex-1">
-                    <Settings className="h=7 w-7 mr-3 text-blue-500" />
-                    Settings
-                </div>
-            </Link> */}
         </div>
     )
 }

@@ -1,28 +1,26 @@
-import { getApiLimitCount } from '@/lib/api-limit'
+import React from 'react'
+import { UserButton } from '@clerk/nextjs';
+import { DashboardSidebar } from '@/components/Sidebar';
+import { getApiLimitCount } from '@/lib/api-limit';
 import { checkSubscription } from '@/lib/subscription';
 
-import Navbar from '@/components/Navbar'
-import { SidebarNav } from '@/components/Sidebar'
 
-const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-
+export default async function DashboardLayout({ children }: {
+    children: React.ReactNode
+}) {
     const apiLimitCount = await getApiLimitCount();
-    const isPremium = await checkSubscription()
+    const isPremium = await checkSubscription();
 
     return (
-        <div className='h-full relative bg-gray-800'>
-            <div className="hidden h-full md:flex w-72 md:flex-col md:fixed md:inset-y-0 bg-gray-900">
-                <div>
-                    <SidebarNav apiLimitCount={apiLimitCount} isPremium={isPremium} />
+        <main>
+            <div className='h-full relative'>
+                <div className="absolute right-0 top-0 hidden md:flex w-full items-center justify-end p-4 md:pl-72">
+                    <UserButton />
                 </div>
+                <DashboardSidebar apiLimitCount={apiLimitCount} isPremium={isPremium}>
+                    {children}
+                </DashboardSidebar>
             </div>
-
-            <main className="md:pl-72">
-                <Navbar />
-                {children}
-            </main>
-        </div>
+        </main>
     )
 }
-
-export default DashboardLayout

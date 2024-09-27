@@ -78,7 +78,7 @@ const ConversationPage = () => {
     }
 
     return (
-        <main className='bg-gray-800'>
+        <div className='bg-gray-800 w-full mx-auto md:my-10 px-4 md:px-32 lg:px-64'>
             <Heading
                 title='Conversation'
                 description='Chat with AI that&apos;s 10x smarter than your Cat (or Dog)'
@@ -143,7 +143,7 @@ const ConversationPage = () => {
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     )
 }
 

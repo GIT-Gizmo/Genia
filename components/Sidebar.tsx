@@ -1,67 +1,78 @@
-"use client";
-import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import Link from "next/link";
+"use client"
+
+import { useState } from "react"
+import { UserButton } from "@clerk/nextjs";
+import { Code2, ImageIcon, LayoutDashboard, MessageSquare, Music4, VideoIcon, Settings, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Code2, ImageIcon, LayoutDashboard, MessageSquare, Music4, VideoIcon, Settings } from "lucide-react";
-import CircleProgressBar from "./ui/circle-progress-bar";
-import LimitCounter from "./LimitCounter";
+import Link from "next/link";
 import Image from "next/image";
+
+import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
+import LimitCounter from "@/components/LimitCounter";
+import CircleProgressBar from "@/components/ui/circle-progress-bar";
 
 interface CounterProps {
     apiLimitCount: number;
-    isPremium: boolean
+    isPremium: boolean;
+    children?: React.ReactNode;
 }
 
-export function SidebarNav({ apiLimitCount, isPremium }: CounterProps) {
+export function DashboardSidebar({ apiLimitCount, isPremium, children }: CounterProps) {
+
     const links = [
         {
             label: "Dashboard",
-            href: "#",
+            href: "dashboard",
             icon: (
-                <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <LayoutDashboard className="text-neutral-500 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Conversation",
-            href: "#",
+            href: "conversation",
             icon: (
-                <MessageSquare className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <MessageSquare className="text-violet-500 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
-            label: "Image",
-            href: "#",
+            label: "Image Generation",
+            href: "image",
             icon: (
-                <ImageIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <ImageIcon className="text-pink-700 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
-            label: "Video",
-            href: "#",
+            label: "Video Generation",
+            href: "/image",
             icon: (
-                <VideoIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <VideoIcon className="text-orange-700 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
-            label: "Music",
-            href: "#",
+            label: "Music Generation",
+            href: "/music",
             icon: (
-                <Music4 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <Music4 className="text-pink-500 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
-            label: "Code",
-            href: "#",
+            label: "Code Generation",
+            href: "/code",
             icon: (
-                <Code2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <Code2 className="text-[#00DDFF] dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
     ];
     const [open, setOpen] = useState(false);
+
     return (
-        <>
+        <div
+            className={cn(
+                "rounded-md flex flex-col md:flex-row bg-gray-800 w-full flex-1 border overflow-hidden",
+                "h-screen"
+            )}
+        >
             <Sidebar open={open} setOpen={setOpen}>
                 <SidebarBody className="justify-between gap-10">
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -72,11 +83,19 @@ export function SidebarNav({ apiLimitCount, isPremium }: CounterProps) {
                             ))}
                         </div>
                     </div>
-                    <div>
+                    <div className="flex flex-col overflow-y-auto overflow-x-hidden">
+                        <SidebarLink
+                            link={{
+                                label: "Profile",
+                                href: "",
+                                icon: <UserButton />
+                            }}
+                            className='md:hidden'
+                        />
                         <SidebarLink
                             link={{
                                 element: <LimitCounter apiLimitCount={apiLimitCount} isPremium={isPremium} />,
-                                href: "#",
+                                href: "/subscription",
                                 icon: (
                                     <CircleProgressBar
                                         value={apiLimitCount}
@@ -89,15 +108,17 @@ export function SidebarNav({ apiLimitCount, isPremium }: CounterProps) {
                         />
                         <SidebarLink
                             link={{
-                                label: "Settings",
-                                href: "/settings",
-                                icon: <Settings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                                label: "Manage subscription",
+                                href: "/subscription",
+                                icon: <Settings className="text-neutral-700 dark:text-neutral-200 flex-shrink-0" />
                             }}
                         />
                     </div>
                 </SidebarBody>
             </Sidebar>
-        </>
+
+            {children}
+        </div>
     );
 }
 export const Logo = () => {
@@ -109,12 +130,13 @@ export const Logo = () => {
             <Image
                 src="/assets/logo.png"
                 alt='Logo'
-                fill
+                width={30}
+                height={30}
             />
             <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="font-medium text-black dark:text-white whitespace-pre"
+                className="font-medium text-white whitespace-pre"
             >
                 Genia
             </motion.span>
@@ -126,7 +148,8 @@ export const LogoIcon = () => {
         <Image
             src="/assets/logo.png"
             alt='Logo'
-            fill
+            width={30}
+            height={30}
         />
     );
 };

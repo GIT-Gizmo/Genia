@@ -9,10 +9,10 @@ const SettingsPage = async () => {
     const isPremium = await checkSubscription();
 
     return (
-        <div>
+        <div className='bg-gray-800 w-full mx-auto md:my-10 px-4 md:px-32 lg:px-64'>
             <Heading
                 title='Settings'
-                description='Manage account settings'
+                description='Manage your subscription settings'
                 icon={Settings}
                 iconColor='text-blue-500'
                 bgColor='bg-blue-500/10'

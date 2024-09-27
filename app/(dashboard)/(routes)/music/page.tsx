@@ -59,7 +59,7 @@ const MusicGenerationPage = () => {
     }
 
     return (
-        <main className='bg-gray-800'>
+        <main className='bg-gray-800 w-full mx-auto md:my-10 px-4 md:px-32 lg:px-64'>
             <Heading
                 title='Music Generation'
                 description='Hum a tune? Nah, just type it—let our AI drop the beat!'
