@@ -184,7 +184,7 @@ export const SidebarLink = ({
                 }}
                 className="text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
             >
-                {link.label}
+                {link.label} {link.element}
             </motion.span>
         </Link>
     );

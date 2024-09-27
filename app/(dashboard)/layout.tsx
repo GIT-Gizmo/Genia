@@ -5,9 +5,9 @@ import { getApiLimitCount } from '@/lib/api-limit';
 import { checkSubscription } from '@/lib/subscription';
 
 
-export default async function DashboardLayout({ children }: {
+const DashboardLayout = async ({ children }: {
     children: React.ReactNode
-}) {
+}) => {
     const apiLimitCount = await getApiLimitCount();
     const isPremium = await checkSubscription();
 
@@ -24,3 +24,5 @@ export default async function DashboardLayout({ children }: {
         </main>
     )
 }
+
+export default DashboardLayout
