@@ -23,28 +23,28 @@ export function DashboardSidebar({ apiLimitCount, isPremium, children }: Counter
     const links = [
         {
             label: "Dashboard",
-            href: "dashboard",
+            href: "/dashboard",
             icon: (
                 <LayoutDashboard className="text-neutral-500 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Conversation",
-            href: "conversation",
+            href: "/conversation",
             icon: (
                 <MessageSquare className="text-violet-500 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Image Generation",
-            href: "image",
+            href: "/image",
             icon: (
                 <ImageIcon className="text-pink-700 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Video Generation",
-            href: "/image",
+            href: "/video",
             icon: (
                 <VideoIcon className="text-orange-700 h-5 w-5 flex-shrink-0" />
             ),
