@@ -9,7 +9,7 @@ import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 
-export const DashboardPage = () => {
+const DashboardPage = () => {
     const router = useRouter()
     const [isMounted, setIsMounted] = useState(false)
 
