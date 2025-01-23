@@ -104,7 +104,7 @@ const VideoGenerationPage = () => {
                     )}
                     {!video && !isLoading && (
                         <Empty
-                            label="No video generated yet. Genia is resting."
+                            label="No video generated yet. Quinox is resting."
                         />
                     )}
                     {video && (

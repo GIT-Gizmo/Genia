@@ -11,7 +11,7 @@ export const LogoSpinner = () => {
                 />
             </div>
             <p className="text-sm text-zinc-300">
-                Genia is thinking...
+                Quinox is working it&apos; magic ...
             </p>
         </div>
     )

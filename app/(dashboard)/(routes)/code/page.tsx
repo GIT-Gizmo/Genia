@@ -133,7 +133,7 @@ const CodeGenerationPage = () => {
                     )}
                     {messages.length === 0 && !isLoading && (
                         <Empty
-                            label="No prompt yet. Genia is resting."
+                            label="No prompt yet. Quinox is resting."
                         />
                     )}
                     <div className="flex flex-col-reverse gap-y-4">

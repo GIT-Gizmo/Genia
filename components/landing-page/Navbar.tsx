@@ -27,7 +27,7 @@ const Navbar = () => {
                 </div>
 
                 <h1 className={cn("text-2xl font-bold text-white", font.className)}>
-                    Genia
+                    Quinox
                 </h1>
             </Link>
 

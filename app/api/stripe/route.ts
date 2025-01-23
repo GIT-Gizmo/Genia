@@ -41,8 +41,8 @@ export async function GET() {
                     price_data: {
                         currency: "USD",
                         product_data: {
-                            name: "Genia Premium",
-                            description: "With Genia Premium subscription, get access to unlimited conversation queries and code generations, 75 AI - generated images, 3 short videos, and 50 music tracks monthly. Perfect for creators and developers!",
+                            name: "Quinox Premium",
+                            description: "With Quinox Premium subscription, get access to unlimited conversation queries and code generations, 75 AI - generated images, 3 short videos, and 50 music tracks monthly. Perfect for creators and developers!",
                         },
                         unit_amount: 500,
                         recurring: {

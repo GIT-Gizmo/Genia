@@ -104,7 +104,7 @@ const MusicGenerationPage = () => {
                     )}
                     {!music && !isLoading && (
                         <Empty
-                            label="No music generated yet. Genia is resting."
+                            label="No music generated yet. Quinox is resting."
                         />
                     )}
                     {music && (

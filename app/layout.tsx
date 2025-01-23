@@ -9,8 +9,8 @@ import { ToastProvider } from "@/components/Toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Genia",
-  description: "Unlock creativity with Genia, an AI platform where you can effortlessly generate stunning videos, music, images, code, and conversation.",
+  title: "Quinox",
+  description: "Unlock creativity with Quinox, an AI platform where you can generate stunning videos, music, images, code, and converse with AI.",
 };
 
 export default function RootLayout({

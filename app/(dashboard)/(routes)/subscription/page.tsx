@@ -20,7 +20,7 @@ const SettingsPage = async () => {
 
             <div className="px-4 space-y-4 lg:px-8">
                 <div className="text-zinc-300 text-sm">
-                    {isPremium ? "You are currently subscribed to Genia Premium plan." : "You are currently on a free plan. Upgrade to Genia Premium plan."}
+                    {isPremium ? "You are currently subscribed to Quinox Premium plan." : "You are currently on a free plan. Upgrade to Quinox Premium plan."}
                 </div>
 
                 <SubscriptionButton isPremium={isPremium} />

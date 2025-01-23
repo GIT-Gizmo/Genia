@@ -138,7 +138,7 @@ export const Logo = () => {
                 animate={{ opacity: 1 }}
                 className="font-medium text-white whitespace-pre"
             >
-                Genia
+                Quinox
             </motion.span>
         </Link>
     );

@@ -130,7 +130,7 @@ const ImageGenerationPage = () => {
                     )}
                     {image.length === 0 && !isLoading && (
                         <Empty
-                            label="No images generated yet. Genia is resting."
+                            label="No images generated yet. Quinox is resting."
                         />
                     )}
                     {image && (

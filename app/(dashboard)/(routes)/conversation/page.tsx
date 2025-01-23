@@ -123,7 +123,7 @@ const ConversationPage = () => {
                     )}
                     {messages.length === 0 && !isLoading && (
                         <Empty
-                            label="No converstion started yet. Genia is resting."
+                            label="No converstion started yet. Quinox is resting."
                         />
                     )}
                     <div className="flex flex-col-reverse gap-y-4">
